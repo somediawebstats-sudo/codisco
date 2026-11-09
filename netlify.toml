@@ -1,7 +1,8 @@
-# Déploiement Netlify : sans ce fichier, Netlify ne lance pas de build
-# (« No build steps found ») et publie un dossier vide, d'où une page 404.
-# Netlify détecte Next.js et installe automatiquement son intégration (runtime OpenNext)
-# qui sert les pages, les images optimisées et la route /api/contact.
+# Déploiement Netlify.
+# - command : sans elle, Netlify ne lance pas de build (« No build steps found ») et publie un dossier vide (404).
+# - publish : le dossier .next produit par le build, que l'intégration Next.js empaquette.
+# - plugin : l'intégration Next.js de Netlify (runtime OpenNext), déclarée explicitement pour qu'elle
+#   s'exécute même si la détection automatique échoue. Elle sert les pages, les images et /api/contact.
 
 [build]
   command = "npm run build"
@@ -9,3 +10,6 @@
 
 [build.environment]
   NODE_VERSION = "24"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
