@@ -34,7 +34,10 @@ export const CONTACT = {
   },
   zone: "De Pointe-Noire à Brazzaville, onshore et offshore",
   astreinte: "24 h/24, 7 j/7",
-  reseaux: { linkedin: "#", facebook: "#" }, // liens à renseigner
+  reseaux: {
+    linkedin: "https://www.linkedin.com/company/codisco-gibat/",
+    facebook: "https://www.facebook.com/people/Codisco-Gibat/61582201768052/",
+  },
 };
 
 export const MENU = [
