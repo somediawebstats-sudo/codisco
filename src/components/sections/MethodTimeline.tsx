@@ -1,175 +1,116 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Icon } from "../ui/Icon";
+import { useEffect, useRef } from "react";
 
-/* Frise de la méthode.
-   - Grand écran : pilotée par le défilement de la page. En descendant, l'étape 1 s'allume,
-     sa jauge se remplit, puis l'étape 2 s'allume, etc.
-   - Petit écran (≤ 900 px) : carrousel à faire glisser. L'allumage suit le glissement.
+/* Frise de la méthode, pilotée par le défilement de la page.
+   En descendant : l'étape 1 s'allume, sa jauge se remplit, puis l'étape 2 s'allume, etc.
+
+   - Grand écran (frise horizontale) : le titre et la frise sont ÉPINGLÉS à l'écran (position sticky)
+     pendant toute la séquence. La page ne reprend son défilement qu'une fois les 4 étapes allumées :
+     impossible de passer la section sans l'avoir vue en entier.
+   - Petit écran (≤ 900 px, frise verticale) : pas d'épinglage, l'allumage suit la lecture.
+
    Chaque étape reçoit deux variables CSS : --lit (allumage, 0 → 1) et --fill (jauge, 0 → 1).
-   Sans JavaScript ou avec prefers-reduced-motion, tout est allumé. */
+   Sans JavaScript ou avec prefers-reduced-motion : pas d'épinglage, frise entièrement allumée. */
 
 export type Etape = { titre: string; texte: string; note: string };
 
 const COMPACT = "(max-width: 900px)";
-// Grand écran : chaque étape occupe 1 unité d'allumage + 2 unités de jauge
+// Chaque étape occupe 1 unité d'allumage + 2 unités de jauge sur l'échelle de progression
 const LIGHT = 1;
 const FILL = 2;
+// Grand écran : part du défilement épinglé gardée en réserve au début et à la fin,
+// pour que la frise complète reste un instant affichée avant de repartir
+const HOLD_START = 0.04;
+const HOLD_END = 0.18;
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
 
-export function MethodTimeline({ etapes }: { etapes: Etape[] }) {
+export function MethodTimeline({ etapes, head }: { etapes: Etape[]; head?: React.ReactNode }) {
+  const pinRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
-  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
+    const pin = pinRef.current;
+    const sticky = stickyRef.current;
     const list = listRef.current;
-    if (!list) return;
+    if (!pin || !sticky || !list || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const items = Array.from(list.children) as HTMLElement[];
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const mq = window.matchMedia(COMPACT);
+    const unit = LIGHT + FILL;
+    const total = items.length * unit;
     let frame = 0;
-    let cleanup = () => {};
 
-    const apply = (lit: (i: number) => number, fill: (i: number) => number) =>
-      items.forEach((li, i) => {
-        const l = reduce ? 1 : lit(i);
-        li.style.setProperty("--lit", l.toFixed(3));
-        li.style.setProperty("--fill", (reduce ? 1 : fill(i)).toFixed(3));
-        li.classList.toggle("is-lit", l >= 1);
-      });
-
-    const listen = (target: EventTarget, update: () => void) => {
-      const onScroll = () => {
-        if (!frame) frame = requestAnimationFrame(update);
-      };
-      update();
-      target.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll);
-      return () => {
-        target.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", onScroll);
-      };
-    };
-
-    // Grand écran : progression selon la position de la frise dans la page
-    const pageMode = () => {
-      const unit = LIGHT + FILL;
-      const total = items.length * unit;
-      return listen(window, () => {
-        frame = 0;
-        const vh = window.innerHeight;
+    // Progression de 0 à 1
+    const progress = () => {
+      const vh = window.innerHeight;
+      if (mq.matches) {
+        // Vertical : le haut de la frise à 90 % de l'écran → son bas à 35 %
         const rect = list.getBoundingClientRect();
-        // Début : le haut de la frise à 90 % de l'écran. Fin : son bas à 35 %.
         const start = vh * 0.9;
         const end = vh * 0.35;
-        const u = clamp((start - rect.top) / (rect.height + start - end)) * total;
-        apply(
-          (i) => clamp(u - i * unit),
-          (i) => clamp((u - i * unit - LIGHT) / FILL),
-        );
-      });
+        return clamp((start - rect.top) / (rect.height + start - end));
+      }
+      // Horizontal : avancée dans la zone épinglée
+      const stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+      const range = pin.offsetHeight - sticky.offsetHeight;
+      const p = range > 0 ? clamp((stickyTop - pin.getBoundingClientRect().top) / range) : 1;
+      return clamp((p - HOLD_START) / (1 - HOLD_START - HOLD_END));
     };
 
-    // Petit écran : progression selon le glissement du carrousel
-    const carouselMode = () =>
-      listen(list, () => {
-        frame = 0;
-        const step = items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : 1;
-        const max = list.scrollWidth - list.clientWidth;
-        // En fin de course, la dernière carte ne peut pas s'aligner à gauche : on la considère atteinte
-        const pos = list.scrollLeft >= max - 2 ? items.length - 1 : list.scrollLeft / step;
-        setCurrent(Math.round(pos));
-        apply(
-          (i) => clamp(pos - i + 1),
-          (i) => clamp(pos - i),
-        );
+    const update = () => {
+      frame = 0;
+      const u = progress() * total;
+      items.forEach((li, i) => {
+        const lit = clamp(u - i * unit);
+        li.style.setProperty("--lit", lit.toFixed(3));
+        li.style.setProperty("--fill", clamp((u - i * unit - LIGHT) / FILL).toFixed(3));
+        li.classList.toggle("is-lit", lit >= 1);
       });
-
-    const setup = () => {
-      cleanup();
-      cleanup = mq.matches ? carouselMode() : pageMode();
     };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    pin.classList.add("is-pinned");
     list.classList.add("is-scroll-driven");
-    setup();
-    mq.addEventListener("change", setup);
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    mq.addEventListener("change", onScroll);
     return () => {
-      mq.removeEventListener("change", setup);
-      cleanup();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      mq.removeEventListener("change", onScroll);
       if (frame) cancelAnimationFrame(frame);
     };
   }, []);
 
-  // Carrousel : aller à une étape
-  const goTo = (i: number) => {
-    const list = listRef.current;
-    if (!list) return;
-    const items = Array.from(list.children) as HTMLElement[];
-    const target = items[Math.max(0, Math.min(items.length - 1, i))];
-    list.scrollTo({ left: target.offsetLeft - items[0].offsetLeft, behavior: "smooth" });
-  };
-
   return (
-    <div
-      className="steps-wrap"
-      role="region"
-      aria-roledescription="carrousel"
-      aria-label="Les 4 étapes de notre méthode"
-    >
-      <ol className="steps" ref={listRef}>
-        {etapes.map((e, i) => (
-          <li key={e.titre} aria-roledescription="étape" aria-label={`${i + 1} sur ${etapes.length}`}>
-            <div className="step-head">
-              <span className="step-num">
-                <small>Étape</small>
-                <b>{String(i + 1).padStart(2, "0")}</b>
-              </span>
-              <span className="step-line" aria-hidden="true">
-                <span />
-              </span>
-            </div>
-            <div className="step-body">
-              <h3>{e.titre}</h3>
-              <p>{e.texte}</p>
-              <em>{e.note}</em>
-            </div>
-          </li>
-        ))}
-      </ol>
-
-      {/* Navigation du carrousel (affichée sur petit écran uniquement) */}
-      <div className="steps-nav">
-        <button
-          type="button"
-          className="steps-arrow is-prev"
-          onClick={() => goTo(current - 1)}
-          disabled={current === 0}
-          aria-label="Étape précédente"
-        >
-          <Icon name="arrow" />
-        </button>
-        <div className="steps-dots">
+    <div className="steps-pin" ref={pinRef}>
+      <div className="steps-sticky" ref={stickyRef}>
+        {head}
+        <ol className="steps" ref={listRef}>
           {etapes.map((e, i) => (
-            <button
-              key={e.titre}
-              type="button"
-              className={i === current ? "is-current" : undefined}
-              aria-label={`Aller à l'étape ${i + 1} : ${e.titre}`}
-              aria-current={i === current ? "step" : undefined}
-              onClick={() => goTo(i)}
-            />
+            <li key={e.titre}>
+              <div className="step-head">
+                <span className="step-num">
+                  <small>Étape</small>
+                  <b>{String(i + 1).padStart(2, "0")}</b>
+                </span>
+                <span className="step-line" aria-hidden="true">
+                  <span />
+                </span>
+              </div>
+              <div className="step-body">
+                <h3>{e.titre}</h3>
+                <p>{e.texte}</p>
+                <em>{e.note}</em>
+              </div>
+            </li>
           ))}
-        </div>
-        <button
-          type="button"
-          className="steps-arrow"
-          onClick={() => goTo(current + 1)}
-          disabled={current === etapes.length - 1}
-          aria-label="Étape suivante"
-        >
-          <Icon name="arrow" />
-        </button>
+        </ol>
       </div>
     </div>
   );

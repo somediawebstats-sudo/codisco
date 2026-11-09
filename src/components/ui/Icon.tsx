@@ -2,9 +2,36 @@
    puis <Icon name="arrow" /> partout. Aucune dépendance externe. */
 
 const PATHS = {
-  arrow: <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />,
-  chevron: <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />,
-  check: <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />,
+  arrow: (
+    <path
+      d="M5 12h14M13 6l6 6-6 6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+  chevron: (
+    <path
+      d="M9 6l6 6-6 6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+  check: (
+    <path
+      d="M5 12.5l4.5 4.5L19 7.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
   plus: <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />,
   close: <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />,
@@ -15,7 +42,15 @@ const PATHS = {
       <path d="M12 7v5l3 2" />
     </g>
   ),
-  shield: <path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />,
+  shield: (
+    <path
+      d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
+  ),
   badge: (
     <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
       <circle cx="12" cy="9" r="6" />
@@ -29,22 +64,58 @@ const PATHS = {
       <rect x="17" y="14" width="4" height="6" rx="1.5" />
     </g>
   ),
-  phone: <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />,
+  phone: (
+    <path
+      d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
+  ),
   pin: (
     <g fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" />
       <circle cx="12" cy="9" r="2.5" />
     </g>
   ),
-  map: <path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />,
+  map: (
+    <path
+      d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
+  ),
   clock: (
     <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v5l3 2" />
     </g>
   ),
-  chat: <path d="M4 20l1.5-4A8 8 0 1 1 9 19.5L4 20z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />,
+  chat: (
+    <path
+      d="M4 20l1.5-4A8 8 0 1 1 9 19.5L4 20z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
+  ),
   play: <path d="M8 5.5v13l11-6.5-11-6.5z" fill="currentColor" />,
+  building: (
+    <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 21V5l8-3v19M12 9l8 3v9M3 21h18" />
+      <path d="M8 8v.01M8 12v.01M8 16v.01M16 15v.01M16 18v.01" />
+    </g>
+  ),
+  snow: (
+    <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7" />
+      <path d="M9.5 3.5L12 6l2.5-2.5M9.5 20.5L12 18l2.5 2.5M3.6 10.4L6.8 9.6 6 6.4M17.2 17.6l3.2-.8M18 6.4l-.8 3.2 3.2.8M6 17.6l.8-3.2-3.2-.8" />
+    </g>
+  ),
 };
 
 export type IconName = keyof typeof PATHS;

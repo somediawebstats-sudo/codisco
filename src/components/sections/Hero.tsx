@@ -1,4 +1,3 @@
-import { CountUp } from "../ui/CountUp";
 import { Icon } from "../ui/Icon";
 
 /* Hero : volontairement sans bouton (voir docs/BRIEF-DEVELOPPEMENT.md §1).
@@ -21,7 +20,7 @@ export function Hero() {
           <ul className="hero-stats">
             <li>
               <span className="stat-icon"><Icon name="history" /></span>
-              <span><strong><CountUp to={30} prefix="+" suffix=" ans" /></strong><small>d&apos;expérience au Congo</small></span>
+              <span><strong>{/* Le « +30 » du loader vient se poser ici */}<span className="hero-counter" data-hero-counter>+30</span> ans</strong><small>d&apos;expérience au Congo</small></span>
             </li>
             <li>
               <span className="stat-icon is-blue"><Icon name="shield" /></span>
