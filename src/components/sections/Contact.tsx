@@ -43,9 +43,6 @@ export function Contact() {
                 <span><small>Astreinte</small>{CONTACT.astreinte}</span>
               </li>
             </ul>
-            <a className="btn btn-primary btn-sm" href={CONTACT.whatsapp} target="_blank" rel="noopener">
-              <Icon name="chat" className="btn-lead-icon" /> Écrire sur WhatsApp
-            </a>
           </div>
 
           <ContactForm />
