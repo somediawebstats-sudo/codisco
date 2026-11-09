@@ -1,0 +1,3 @@
+/* Styles globaux : tokens du design system, puis composants et sections. */
+@import "../styles/tokens.css";
+@import "../styles/main.css";

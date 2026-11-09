@@ -1,0 +1,106 @@
+/* =========================================================
+   CODISCO GIBAT · Design tokens (source : maquette Figma VA)
+   Toutes les valeurs sont relevées directement dans la VA.
+   La police Plymouth est chargée par next/font (src/app/layout.tsx),
+   via la variable --font-plymouth. Équivalent JSON : design/tokens.json
+   ========================================================= */
+
+:root {
+  /* ---------- Couleurs de marque ---------- */
+  --c-green-700: #3C6E34;   /* vert principal : boutons, bandeau, contrat global */
+  --c-green-600: #4E8A44;
+  --c-green-500: #6E9A66;
+  --c-green-200: #C2D6BE;
+  --c-green-100: #D8E2D6;   /* fond des étiquettes (eyebrows) */
+  --c-green-50:  #ECF2EB;
+
+  --c-navy-950: #0A1726;    /* pied de page */
+  --c-navy-900: #0F2234;    /* titres, panneaux services, contact */
+  --c-blue-700: #265483;    /* accents bleus, puces, icônes */
+  --c-blue-500: #4F7AAB;
+  --c-blue-300: #A0CAFF;    /* liens sur fond sombre */
+  --c-blue-100: #BFD0E2;
+
+  /* ---------- Neutres ---------- */
+  --c-bg:        #F4F6FA;   /* fond de page */
+  --c-surface:   #FFFFFF;
+  --c-slate-50:  #F8FAFC;
+  --c-slate-100: #F1F5F9;
+  --c-slate-150: #EEF2F7;
+  --c-slate-200: #E2E8F0;
+  --c-slate-300: #CBD5E1;
+  --c-slate-400: #94A3B8;
+  --c-slate-500: #64748B;
+  --c-slate-600: #475569;
+  --c-slate-700: #334155;
+  --c-placeholder: #D9D9D9; /* blocs photo en attente */
+
+  --c-amber-500: #F59E0B;
+  --c-amber-50:  #FFFBEB;
+
+  /* ---------- Rôles ---------- */
+  --c-text:        var(--c-navy-900);
+  --c-text-muted:  var(--c-slate-600);
+  --c-text-soft:   var(--c-slate-500);
+  --c-primary:     var(--c-green-700);
+  --c-on-dark:     #FFFFFF;
+  --c-on-dark-muted: rgba(255, 255, 255, 0.72);
+  --c-border:      var(--c-slate-200);
+
+  /* ---------- Typographie ---------- */
+  --font-sans: var(--font-plymouth), "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Échelle desktop (valeurs Figma) ; les clamp() gèrent le mobile */
+  --fs-display: clamp(2.25rem, 1.2rem + 3.6vw, 3.375rem);  /* 54 / 54, ls -1.35px */
+  --fs-h2:      clamp(1.875rem, 1.3rem + 2vw, 2.75rem);     /* 44 / 48 recommandé (voir brief) */
+  --fs-h2-sm:   clamp(1.625rem, 1.2rem + 1.4vw, 2.25rem);   /* 36 / 40 */
+  --fs-h3:      clamp(1.375rem, 1.1rem + 0.8vw, 1.875rem);  /* 30 / 36 */
+  --fs-h4:      1.5rem;      /* 24 / 32 */
+  --fs-h5:      1.375rem;    /* 22 / 28 */
+  --fs-lead:    1.125rem;    /* 18 / 28 */
+  --fs-body:    1rem;        /* 16 / 24 */
+  --fs-small:   0.875rem;    /* 14 / 23 */
+  --fs-xs:      0.75rem;     /* 12 / 16 */
+  --fs-ticker:  0.875rem;    /* 14 / 20, majuscules, ExtraBold */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-demibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  --ls-tight: -0.025em;      /* titres ExtraBold */
+  --ls-caps: 0.05em;         /* étiquettes en majuscules */
+
+  /* ---------- Espacements (base 4) ---------- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px; --sp-5: 20px;
+  --sp-6: 24px; --sp-8: 32px; --sp-10: 40px; --sp-12: 48px; --sp-14: 56px;
+  --sp-16: 64px; --sp-20: 80px; --sp-24: 96px; --sp-30: 120px; --sp-34: 136px;
+
+  --section-y: clamp(64px, 8vw, 128px);
+
+  /* ---------- Mise en page ---------- */
+  --container: 1216px;       /* largeur utile Figma (cadre 1280, marges 32) */
+  --gutter: clamp(16px, 4vw, 32px);
+  --header-h: 92px;
+
+  /* ---------- Rayons ---------- */
+  --r-sm: 12px;
+  --r-md: 20px;
+  --r-lg: 28px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  /* ---------- Ombres ---------- */
+  --sh-card: 0 20px 40px -15px rgba(15, 34, 52, 0.05);
+  --sh-soft: 0 10px 30px -5px rgba(15, 34, 52, 0.06);
+  --sh-sm:   0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
+  --sh-md:   0 4px 6px -1px rgba(0, 0, 0, 0.10), 0 2px 4px -2px rgba(0, 0, 0, 0.10);
+  --sh-lg:   0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.10);
+  --sh-xl:   0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* ---------- Mouvement ---------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 240ms;
+  --dur-slow: 420ms;
+}
