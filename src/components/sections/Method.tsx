@@ -13,16 +13,21 @@ export function Method() {
   return (
     <section className="section" id="methode">
       <div className="container">
-        <div className="section-head center">
-          <span className="eyebrow eyebrow-dot">Notre méthode</span>
-          <h2>
-            Comment nous
-            <br />
-            intervenons
-          </h2>
-        </div>
-        {/* Frise pilotée par le défilement : voir MethodTimeline.tsx */}
-        <MethodTimeline etapes={ETAPES} />
+        {/* Frise pilotée par le défilement : voir MethodTimeline.tsx.
+            Sur grand écran, le titre et la frise restent épinglés jusqu'à ce que les 4 étapes soient allumées. */}
+        <MethodTimeline
+          etapes={ETAPES}
+          head={
+            <div className="section-head center">
+              <span className="eyebrow eyebrow-dot">Notre méthode</span>
+              <h2>
+                Comment nous
+                <br />
+                intervenons
+              </h2>
+            </div>
+          }
+        />
 
         <div className="video-cta">
           <VideoButton

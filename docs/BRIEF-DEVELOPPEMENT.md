@@ -89,11 +89,11 @@ Accordéon accessible (boutons `aria-expanded`). Une seule réponse est ouverte 
 - En cas d'échec, le message renvoie vers le téléphone et WhatsApp.
 
 ### 4.8 Animations générales
-- Loader d'ouverture (`src/components/ui/Loader.tsx`) : un climatiseur s'allume, son volet s'ouvre, l'air souffle et la température descend de 26° à 18°. Il reste au moins 1,6 s et disparaît dès que la page est chargée (au plus 3,2 s). Sécurité : sans JavaScript, il disparaît seul après 4 s.
-- Hero : entrée en cascade à la fin du loader.
-- Compteurs : « +30 ans » monte de 0 à 30 quand il arrive à l'écran (`src/components/ui/CountUp.tsx`), dans le hero, le bloc À propos et le contrat global.
+- Loader d'ouverture (`src/components/ui/Loader.tsx`), autour du message « +30 ans d'expérience » : un anneau se remplit pendant qu'une lumière tourne autour, le compteur central monte de 0 à 30 et les trois métiers s'allument à 10, 20 et 30. À la fin, le « +30 » quitte le loader et vient se poser à sa place dans les chiffres du hero (s'il n'est pas visible à l'écran, sur mobile par exemple, il s'efface sur place). Durée : environ 2,4 s puis 0,9 s d'atterrissage, au plus 4 s d'attente. Sans JavaScript, le loader disparaît seul après 5,5 s.
+- Hero : entrée en cascade à la fin du loader. Le « +30 ans » du hero n'est plus animé en compteur : c'est celui du loader qui vient s'y poser.
+- Compteurs : « +30 ans » monte de 0 à 30 quand il arrive à l'écran (`src/components/ui/CountUp.tsx`), dans le bloc À propos et le contrat global.
 - Blocs : apparition douce au défilement, en cascade entre blocs voisins (`src/components/ui/RevealOnScroll.tsx`). Les blocs déjà visibles au chargement ne sont jamais masqués, donc aucun clignotement.
-- Méthode : frise **pilotée par le défilement** (`src/components/sections/MethodTimeline.tsx`). En descendant, l'étape 1 s'allume, sa jauge se remplit, puis l'étape 2 s'allume, etc. Si on remonte, la frise s'éteint dans l'ordre inverse. Sous 900 px, la frise devient un **carrousel** à faire glisser (flèches et points de pagination) ; l'allumage suit alors le glissement.
+- Méthode : frise **pilotée par le défilement** (`src/components/sections/MethodTimeline.tsx`). En descendant, l'étape 1 s'allume, sa jauge se remplit, puis l'étape 2 s'allume, etc. Si on remonte, la frise s'éteint dans l'ordre inverse. Sur grand écran, le titre et la frise restent **épinglés** à l'écran (sticky) pendant toute la séquence : la page ne reprend son défilement qu'une fois les 4 étapes allumées. Sous 900 px, la frise devient **verticale, de haut en bas** (rail à gauche, jauge verticale) et reste pilotée par le défilement de la page.
 - Bandeaux en boucle (pause au survol), légère élévation des cartes au survol.
 - Tout est désactivé quand `prefers-reduced-motion` est actif.
 
