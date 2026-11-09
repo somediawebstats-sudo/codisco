@@ -86,3 +86,5 @@ Le formulaire envoie vers `/api/contact`, qui revalide les champs (mêmes règle
 ## Hébergement
 
 Le site a besoin de Node.js pour la route `/api/contact` : Vercel, Netlify, ou un hébergement compatible Node (beaucoup de cPanel le proposent via « Setup Node.js App »).
+
+# codisco
