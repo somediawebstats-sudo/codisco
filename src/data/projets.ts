@@ -5,7 +5,10 @@
      et de nom de dossier pour les médias :
        public/images/projets/<slug>/01.webp, 02.webp…
        public/videos/projets/<slug>/01.mp4 (+ 01.webp pour la vignette)
-   - service : sert aux filtres (un filtre sans projet n'est pas affiché)
+   - service : range le projet dans sa ligne de métier (voir LIGNES) ;
+     une ligne sans projet n'est pas affichée
+   - ordre : dans chaque ligne, les projets apparaissent dans l'ordre de PROJETS
+     (mettre les plus récents en tête)
    - photos : la première sert de vignette et de grande image du tiroir
    - annee : facultative, n'est affichée que si elle est renseignée
    - videos : facultatives, affichées dans le tiroir sous le texte
@@ -36,12 +39,11 @@ export type Projet = {
   videos?: ProjetVideo[];
 };
 
-export const FILTRES: { key: ServiceKey | "tous"; label: string }[] = [
-  { key: "tous", label: "Tous" },
-  { key: "travaux", label: "Travaux et maintenance" },
-  { key: "climatisation", label: "Climatisation et réfrigération" },
-  { key: "hygiene", label: "Hygiène 3D" },
-  { key: "contrat", label: "Contrat global" },
+/* Lignes de la section Réalisations : une ligne par métier, chacune avec son slider */
+export const LIGNES: { key: string; label: string; services: ServiceKey[] }[] = [
+  { key: "climatisation", label: "Climatisation et réfrigération", services: ["climatisation"] },
+  { key: "hygiene", label: "Hygiène 3D", services: ["hygiene"] },
+  { key: "autres", label: "Travaux, maintenance et contrats globaux", services: ["travaux", "contrat"] },
 ];
 
 /* Chemins des photos d'un projet : public/images/projets/<slug>/01.webp … */
@@ -49,6 +51,24 @@ const photos = (slug: string, n: number) =>
   Array.from({ length: n }, (_, i) => `/images/projets/${slug}/${String(i + 1).padStart(2, "0")}.webp`);
 
 export const PROJETS: Projet[] = [
+  {
+    slug: "total-energies-djeno-local-four",
+    service: "climatisation",
+    serviceLabel: "Climatisation et réfrigération",
+    client: "TotalEnergies",
+    titre: "Climatisation du local électrique de la salle convertisseur du four, raffinerie de Djéno",
+    resume:
+      "Étude, conception, fabrication et mise en œuvre du réseau aéraulique qui climatise le local électrique de la salle convertisseur du four.",
+    lieu: "Raffinerie de Djéno",
+    annee: "2025",
+    contexte:
+      "À la raffinerie TotalEnergies de Djéno, le local électrique de la salle convertisseur du four abrite des armoires électriques qui doivent être maintenues au frais. TotalEnergies a confié à CODISCO GIBAT l'installation d'un système de climatisation aéraulique dédié.",
+    realisation:
+      "Étude et conception du réseau aéraulique, puis fabrication et installation : groupes de production posés à l'extérieur du local, armoires de climatisation à l'intérieur, réseau de gaines et raccordements, jusqu'à la mise en œuvre complète du système.",
+    resultat:
+      "Le local électrique de la salle convertisseur dispose d'une climatisation aéraulique conçue, fabriquée et installée par CODISCO GIBAT.",
+    photos: photos("total-energies-djeno-local-four", 5),
+  },
   {
     slug: "total-energies-batiment-x4",
     service: "climatisation",

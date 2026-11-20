@@ -1,21 +1,103 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { FILTRES, PROJETS, type Projet, type ServiceKey } from "@/data/projets";
-import { BtnArrow } from "../ui/Icon";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { LIGNES, PROJETS, type Projet } from "@/data/projets";
+import { BtnArrow, Icon } from "../ui/Icon";
 import { ProjectDrawer } from "./ProjectDrawer";
 
-/* Photo du projet, ou bloc gris tant qu'elle n'est pas fournie */
-export function ProjectPhoto({ projet, index = 0 }: { projet: Projet; index?: number }) {
-  const src = projet.photos[index];
-  if (!src) return <div className="ph" data-label="Photo du projet" />;
-  return <Image src={src} alt={index ? `${projet.titre}, photo ${index + 1}` : projet.titre}width={1600} height={1200} sizes="(max-width: 900px) 100vw, 50vw" />;
+/* Une ligne de métier : titre, compteur, flèches et slider horizontal de fiches.
+   Le défilement est natif (scroll-snap) : glisser au doigt, molette, flèches du clavier. */
+function LigneProjets({ label, projets, onOpen }: { label: string; projets: Projet[]; onOpen: (slug: string) => void }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [bords, setBords] = useState({ debut: true, fin: true });
+
+  const majBords = useCallback(() => {
+    const t = trackRef.current;
+    if (!t) return;
+    setBords({ debut: t.scrollLeft <= 4, fin: t.scrollLeft + t.clientWidth >= t.scrollWidth - 4 });
+  }, []);
+
+  useEffect(() => {
+    majBords();
+    window.addEventListener("resize", majBords);
+    return () => window.removeEventListener("resize", majBords);
+  }, [majBords]);
+
+  const defiler = (sens: 1 | -1) => {
+    const t = trackRef.current;
+    const carte = t?.querySelector<HTMLElement>(".project-slide");
+    if (!t || !carte) return;
+    const pas = carte.offsetWidth + parseFloat(getComputedStyle(t).columnGap || "0");
+    t.scrollBy({ left: sens * pas, behavior: "smooth" });
+  };
+
+  const navigable = !(bords.debut && bords.fin);
+
+  return (
+    <div className="project-row" role="region" aria-roledescription="carrousel" aria-label={`Réalisations : ${label}`}>
+      <div className="project-row-head">
+        <h3>
+          {label} <span className="project-row-count">{projets.length} projet{projets.length > 1 ? "s" : ""}</span>
+        </h3>
+        {navigable && (
+          <div className="project-row-nav">
+            <button type="button" className="is-prev" onClick={() => defiler(-1)} disabled={bords.debut} aria-label="Projet précédent">
+              <Icon name="arrow" />
+            </button>
+            <button type="button" onClick={() => defiler(1)} disabled={bords.fin} aria-label="Projet suivant">
+              <Icon name="arrow" />
+            </button>
+          </div>
+        )}
+      </div>
+      <div ref={trackRef} className="project-track" onScroll={majBords}>
+        {projets.map((p) => (
+          <article key={p.slug} className="project-slide">
+            <a
+              className="project-slide-media ph"
+              href={`#projet-${p.slug}`}
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={(e) => {
+                e.preventDefault();
+                onOpen(p.slug);
+              }}
+            >
+              {p.photos[0] && <Image src={p.photos[0]} alt="" fill sizes="(max-width: 700px) 85vw, (max-width: 1100px) 45vw, 380px" />}
+            </a>
+            <div className="project-slide-body">
+              <ul className="project-tags">
+                <li>{p.client}</li>
+                {p.annee && <li>{p.annee}</li>}
+              </ul>
+              <h4>{p.titre}</h4>
+              <p>{p.resume}</p>
+              <p className="project-meta">{p.lieu}</p>
+              <a
+                className="btn btn-primary btn-sm"
+                href={`#projet-${p.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onOpen(p.slug);
+                }}
+              >
+                Voir le projet <BtnArrow />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function Realisations() {
-  const [filtre, setFiltre] = useState<ServiceKey | "tous">("tous");
   const [ouvert, setOuvert] = useState<string | null>(null);
+
+  const lignes = LIGNES.map((l) => ({ ...l, projets: PROJETS.filter((p) => l.services.includes(p.service)) })).filter(
+    (l) => l.projets.length > 0,
+  );
 
   return (
     <section className="section" id="realisations">
@@ -28,39 +110,9 @@ export function Realisations() {
             sur le terrain
           </h2>
         </div>
-        <div className="filters" role="group" aria-label="Filtrer les réalisations">
-          {FILTRES.filter((f) => f.key === "tous" || PROJETS.some((p) => p.service === f.key)).map((f) => (
-            <button key={f.key} type="button" aria-pressed={filtre === f.key} onClick={() => setFiltre(f.key)}>
-              {f.label}
-            </button>
-          ))}
-        </div>
-        <div className="projects">
-          {PROJETS.map((p) => (
-            <article key={p.slug} className="project" hidden={filtre !== "tous" && p.service !== filtre}>
-              <div className="project-media ph">{p.photos[0] && <ProjectPhoto projet={p} />}</div>
-              <div className="project-card">
-                <ul className="project-tags">
-                  <li>{p.serviceLabel}</li>
-                  <li>{p.client}</li>
-                </ul>
-                <h3>{p.titre}</h3>
-                <p>{p.resume}</p>
-                <p className="project-meta">
-                  {p.annee ? `${p.lieu}, ${p.annee}` : p.lieu}
-                </p>
-                <a
-                  className="btn btn-primary btn-sm"
-                  href={`#projet-${p.slug}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setOuvert(p.slug);
-                  }}
-                >
-                  Voir le projet <BtnArrow />
-                </a>
-              </div>
-            </article>
+        <div className="project-rows">
+          {lignes.map((l) => (
+            <LigneProjets key={l.key} label={l.label} projets={l.projets} onOpen={setOuvert} />
           ))}
         </div>
       </div>
