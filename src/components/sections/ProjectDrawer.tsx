@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { PROJETS } from "@/data/projets";
+import { PROJETS, type Projet } from "@/data/projets";
 import { BtnArrow, Icon } from "../ui/Icon";
-import { ProjectPhoto } from "./Realisations";
 
 /* Tiroir latéral d'un projet.
    - ancre partageable #projet-slug (un lien WhatsApp ouvre directement le projet)
@@ -91,11 +91,7 @@ export function ProjectDrawer({ slug, onSlugChange }: { slug: string | null; onS
           <Icon name="close" />
         </button>
         <div className="drawer-content">
-          <div className="drawer-gallery">
-            {(p.photos.length ? p.photos : [null, null, null]).map((_, i) => (
-              <ProjectPhoto key={i} projet={p} index={i} />
-            ))}
-          </div>
+          <Galerie key={p.slug} projet={p} />
           <div className="drawer-body">
             <ul className="project-tags">
               <li>{p.serviceLabel}</li>
@@ -138,5 +134,98 @@ export function ProjectDrawer({ slug, onSlugChange }: { slug: string | null; onS
       </aside>
     </div>,
     document.body,
+  );
+}
+
+/* Galerie en slider : une photo à la fois, hauteur limitée pour laisser le descriptif visible.
+   Défilement natif (scroll-snap) : glisser au doigt sur mobile, flèches, vignettes ou touches ← →. */
+function Galerie({ projet }: { projet: Projet }) {
+  const photos = projet.photos;
+  const n = photos.length;
+  const trackRef = useRef<HTMLDivElement>(null);
+  const thumbsRef = useRef<HTMLDivElement>(null);
+  const [actif, setActif] = useState(0);
+
+  const aller = (k: number) => {
+    const t = trackRef.current;
+    if (!t || !n) return;
+    const j = (k + n) % n;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    t.scrollTo({ left: j * t.clientWidth, behavior: reduce ? "auto" : "smooth" });
+  };
+
+  const onScroll = () => {
+    const t = trackRef.current;
+    if (!t) return;
+    const j = Math.round(t.scrollLeft / t.clientWidth);
+    if (j !== actif) setActif(j);
+  };
+
+  // La vignette active reste visible dans la bande
+  useEffect(() => {
+    const thumb = thumbsRef.current?.children[actif] as HTMLElement | undefined;
+    const bande = thumbsRef.current;
+    if (thumb && bande) bande.scrollTo({ left: thumb.offsetLeft - bande.clientWidth / 2 + thumb.clientWidth / 2, behavior: "smooth" });
+  }, [actif]);
+
+  if (!n) {
+    return (
+      <div className="drawer-gallery">
+        <div className="gallery-stage"><div className="ph" data-label="Photo du projet" /></div>
+      </div>
+    );
+  }
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); aller(actif + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); aller(actif - 1); }
+  };
+
+  return (
+    <div className="drawer-gallery" role="region" aria-roledescription="carrousel" aria-label="Photos du projet" onKeyDown={onKeyDown}>
+      <div className="gallery-stage">
+        <div ref={trackRef} className="gallery-track" onScroll={onScroll}>
+          {photos.map((src, i) => (
+            <div key={src} className="gallery-slide" aria-hidden={i !== actif}>
+              <Image
+                src={src}
+                alt={i ? `${projet.titre}, photo ${i + 1}` : projet.titre}
+                width={1600}
+                height={1200}
+                sizes="(max-width: 640px) 100vw, 640px"
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
+        {n > 1 && (
+          <>
+            <button type="button" className="gallery-nav is-prev" onClick={() => aller(actif - 1)} aria-label="Photo précédente">
+              <Icon name="arrow" />
+            </button>
+            <button type="button" className="gallery-nav is-next" onClick={() => aller(actif + 1)} aria-label="Photo suivante">
+              <Icon name="arrow" />
+            </button>
+            <span className="gallery-count" aria-live="polite">{actif + 1} / {n}</span>
+          </>
+        )}
+      </div>
+      {n > 1 && (
+        <div ref={thumbsRef} className="gallery-thumbs">
+          {photos.map((src, i) => (
+            <button
+              key={src}
+              type="button"
+              className={i === actif ? "is-active" : undefined}
+              onClick={() => aller(i)}
+              aria-label={`Voir la photo ${i + 1}`}
+              aria-current={i === actif}
+            >
+              <Image src={src} alt="" width={160} height={120} sizes="72px" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
