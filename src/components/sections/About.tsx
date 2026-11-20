@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { CountUp } from "../ui/CountUp";
 import { BtnArrow, Icon } from "../ui/Icon";
 
@@ -6,8 +7,12 @@ export function About() {
     <section className="section about" id="a-propos">
       <div className="container about-grid">
         <div className="about-visual">
-          <div className="ph about-img-back" data-label="Photo : équipe" />
-          <div className="ph about-img-front" data-label="Photo : atelier ou site" />
+          <div className="ph about-img-back">
+            <Image src="/images/a-propos/equipe.webp" alt="Équipe CODISCO GIBAT en intervention dans une salle des machines" fill sizes="(max-width: 900px) 45vw, 260px" />
+          </div>
+          <div className="ph about-img-front">
+            <Image src="/images/a-propos/site.webp" alt="Levage d'une unité de climatisation à la grue sur un site TotalEnergies" fill sizes="(max-width: 900px) 70vw, 420px" />
+          </div>
           <div className="about-badge">
             <strong><CountUp to={30} prefix="+" /></strong>
             <span>ans d&apos;expérience<br />prouvée au Congo</span>
@@ -30,7 +35,7 @@ export function About() {
             <div className="mini-card">
               <span className="mini-icon is-blue"><Icon name="shield" /></span>
               <h3>Agréments et conformité</h3>
-              <p>Agréments officiels des ministères de la Santé et de l&apos;Environnement de la République du Congo.</p>
+              <p>Agrément officiel du ministère de l&apos;Environnement de la République du Congo.</p>
             </div>
           </div>
           <a className="btn btn-primary" href="#methode">

@@ -23,7 +23,8 @@ const REFERENCES: { nom: string; logo?: string }[] = [
   { nom: "Canal+", logo: "canal-plus-2023.png" },
   { nom: "Bralico", logo: "bralico.png" },
   { nom: "Brasco", logo: "brasco-logo.png" },
-  { nom: "Egis Road", logo: "egis-road.png" },
+  { nom: "Egis", logo: "egis.webp" },
+  { nom: "SARIS Congo", logo: "saris-congo.png" },
   { nom: "CORAF", logo: "coraf.png" },
   { nom: "Laborex", logo: "laborex.png" },
 ];
@@ -36,9 +37,9 @@ export function Contract() {
           <div className="contract-grid">
             <div className="contract-copy">
               <span className="eyebrow eyebrow-on-green">Notre offre phare</span>
-              <h2>Un contrat global pour toutes vos installations</h2>
+              <h2>Une offre globale pour toutes vos installations</h2>
               <p className="contract-lead">
-                Un seul contrat couvre la maintenance de vos bâtiments, de vos équipements de climatisation et de
+                Un contrat unique couvre la maintenance de vos bâtiments, de vos équipements de climatisation et de
                 réfrigération, et l&apos;hygiène de vos sites.
               </p>
               <ul className="benefits">
@@ -60,7 +61,9 @@ export function Contract() {
               </div>
             </div>
             <div className="contract-visual">
-              <div className="ph" data-label="Photo : technicien avec tablette de rapport" />
+              <div className="ph">
+                <Image src="/images/contrat/technicien-rapport.webp" alt="Technicien CODISCO GIBAT remplissant une fiche de contrôle avant intervention" fill sizes="(max-width: 900px) 100vw, 520px" style={{ objectPosition: "center 20%" }} />
+              </div>
               <div className="contract-tag">
                 <span>Astreinte 24 h/24, 7 j/7</span>
                 <em>Incluse</em>

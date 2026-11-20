@@ -44,6 +44,7 @@ h2 { font-size: var(--fs-h2); line-height: 1.1; }
 
 /* Bloc photo en attente : supprimer quand les vraies photos sont prêtes */
 .ph { position: relative; background: var(--c-placeholder); border-radius: var(--r-md); overflow: hidden; }
+.ph > img { object-fit: cover; }
 .ph::after { content: attr(data-label); position: absolute; inset: auto 12px 12px 12px; font-size: var(--fs-xs); color: var(--c-slate-600); }
 
 /* ---------- Étiquettes (eyebrows) ---------- */
@@ -142,6 +143,9 @@ h2 { font-size: var(--fs-h2); line-height: 1.1; }
 .hero-halo { position: absolute; left: 0; right: 0; bottom: 0; width: min(100%, 540px); aspect-ratio: 1; margin-inline: auto; border-radius: 50%; background: radial-gradient(circle, var(--c-green-200) 0%, rgba(194, 214, 190, 0) 70%); filter: blur(40px); }
 /* Bloc du portrait : un vrai cercle (format carré), centré en bas, qui ne se déforme à aucune taille d'écran */
 .hero-portrait { position: absolute; left: 0; right: 0; bottom: 0; width: min(88%, 460px); height: auto; aspect-ratio: 1; margin-inline: auto; border-radius: 50%; background: linear-gradient(160deg, #C9D9C5, #A9C3A3); }
+/* Même largeur que le cercle, plus haut : arrondi en bas (= le cercle), droit en haut pour laisser dépasser la tête */
+.hero-person { position: absolute; left: 0; right: 0; bottom: 0; width: min(88%, 460px); aspect-ratio: 1 / 1.12; margin-inline: auto; overflow: hidden; border-radius: 0 0 50% 50% / 0 0 44.6% 44.6%; }
+.hero-person img { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
 .float-badge {
   position: absolute; display: flex; align-items: center; gap: 10px; padding: 10px 16px 10px 10px;
   background: rgba(255, 255, 255, 0.95); border-radius: var(--r-sm); box-shadow: var(--sh-soft);
@@ -459,12 +463,15 @@ h2 { font-size: var(--fs-h2); line-height: 1.1; }
 .drawer-gallery > * { aspect-ratio: 4 / 3; border-radius: var(--r-sm); object-fit: cover; width: 100%; }
 .drawer-body { display: flex; flex-direction: column; gap: 20px; padding: 24px 40px 48px; }
 .drawer-body h2 { font-size: var(--fs-h3); line-height: 1.2; }
-.drawer-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.drawer-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
 .drawer-facts div { padding: 12px; border-radius: var(--r-sm); background: var(--c-slate-100); }
 .drawer-facts dt { font-size: 10px; font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--c-slate-500); }
 .drawer-facts dd { margin: 2px 0 0; font-size: var(--fs-small); font-weight: var(--fw-bold); }
 .drawer-body h3 { font-size: var(--fs-body); letter-spacing: 0; }
 .drawer-body p { font-size: var(--fs-small); line-height: 23px; color: var(--c-text-muted); }
+.drawer-videos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.drawer-videos video { width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-sm); background: #000; object-fit: cover; }
+.drawer-videos video.is-portrait { aspect-ratio: 9 / 16; }
 body.is-locked { overflow: hidden; }
 
 /* ---------- Fenêtre vidéo ---------- */
@@ -488,7 +495,7 @@ body[data-ready] .hero-copy > :nth-child(3) { animation-delay: 270ms; }
 /* Chiffres du hero : simple fondu, sans déplacement, car le « +30 » du loader vient s'y poser */
 body[data-ready] .hero-copy > .hero-stats { animation: hero-fade 700ms ease 200ms both; }
 body[data-ready] .hero-halo { animation: hero-fade 1600ms var(--ease) both; }
-body[data-ready] .hero-portrait { animation: hero-rise 1200ms var(--ease) 150ms both; }
+body[data-ready] .hero-portrait, body[data-ready] .hero-person { animation: hero-rise 1200ms var(--ease) 150ms both; }
 body[data-ready] .float-badge { animation: hero-badge 800ms var(--ease) 600ms both, float 6s ease-in-out 1.4s infinite; }
 body[data-ready] .badge-bottom { animation-delay: 750ms, 2.2s; }
 @keyframes hero-fade { from { opacity: 0; } }
@@ -620,7 +627,7 @@ body[data-ready] .badge-bottom { animation-delay: 750ms, 2.2s; }
   .step-body { margin-top: 0; padding-top: 2px; gap: 8px; transform: translateX(calc((1 - var(--lit)) * 12px)); }
   .step-body::before { content: "Étape " counter(step, decimal-leading-zero); font-size: 11px; font-weight: var(--fw-extrabold); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--c-green-700); opacity: calc(0.4 + 0.6 * var(--lit)); }
   .hero-visual { height: 380px; order: -1; }
-  .hero-portrait { width: min(88%, 340px); }
+  .hero-portrait, .hero-person { width: min(88%, 340px); }
   .hero-halo { width: min(100%, 400px); }
   .section-head.split { flex-direction: column; align-items: flex-start; gap: 16px; }
   .service-panel { grid-template-columns: minmax(0, 1fr); min-height: 0; }
@@ -662,3 +669,11 @@ body[data-ready] .badge-bottom { animation-delay: 750ms, 2.2s; }
   .reveal { opacity: 1; transform: none; }
   .loader { display: none; }
 }
+
+/* Services : rappel visuel du lien vidéo TEINOVA (même bleu) et mention du prestataire hygiène */
+.spec-list .video-ref { color: var(--c-blue-300); font-weight: var(--fw-bold); }
+.panel-body .text-on-dark { color: #fff; }
+.panel-body .provider { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-blue-300); }
+.panel-body .provider strong { color: #fff; }
+.service-tab .tab-mention { display: block; margin-top: 2px; font-weight: var(--fw-bold); color: var(--c-blue-700); }
+.service-tab.is-active .tab-mention { color: #fff; }

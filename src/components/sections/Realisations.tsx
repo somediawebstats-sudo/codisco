@@ -10,7 +10,7 @@ import { ProjectDrawer } from "./ProjectDrawer";
 export function ProjectPhoto({ projet, index = 0 }: { projet: Projet; index?: number }) {
   const src = projet.photos[index];
   if (!src) return <div className="ph" data-label="Photo du projet" />;
-  return <Image src={src} alt={projet.titre} width={1600} height={1200} sizes="(max-width: 900px) 100vw, 50vw" />;
+  return <Image src={src} alt={index ? `${projet.titre}, photo ${index + 1}` : projet.titre}width={1600} height={1200} sizes="(max-width: 900px) 100vw, 50vw" />;
 }
 
 export function Realisations() {
@@ -29,7 +29,7 @@ export function Realisations() {
           </h2>
         </div>
         <div className="filters" role="group" aria-label="Filtrer les réalisations">
-          {FILTRES.map((f) => (
+          {FILTRES.filter((f) => f.key === "tous" || PROJETS.some((p) => p.service === f.key)).map((f) => (
             <button key={f.key} type="button" aria-pressed={filtre === f.key} onClick={() => setFiltre(f.key)}>
               {f.label}
             </button>
@@ -47,7 +47,7 @@ export function Realisations() {
                 <h3>{p.titre}</h3>
                 <p>{p.resume}</p>
                 <p className="project-meta">
-                  {p.lieu}, {p.annee}
+                  {p.annee ? `${p.lieu}, ${p.annee}` : p.lieu}
                 </p>
                 <a
                   className="btn btn-primary btn-sm"

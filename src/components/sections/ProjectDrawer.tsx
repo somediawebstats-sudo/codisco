@@ -104,7 +104,7 @@ export function ProjectDrawer({ slug, onSlugChange }: { slug: string | null; onS
             <dl className="drawer-facts">
               <div><dt>Client</dt><dd>{p.client}</dd></div>
               <div><dt>Lieu</dt><dd>{p.lieu}</dd></div>
-              <div><dt>Année</dt><dd>{p.annee}</dd></div>
+              {p.annee && <div><dt>Année</dt><dd>{p.annee}</dd></div>}
             </dl>
             <h3>Le contexte</h3>
             <p>{p.contexte}</p>
@@ -112,6 +112,24 @@ export function ProjectDrawer({ slug, onSlugChange }: { slug: string | null; onS
             <p>{p.realisation}</p>
             <h3>Le résultat</h3>
             <p>{p.resultat}</p>
+            {p.videos?.length ? (
+              <>
+                <h3>En vidéo, sur le chantier</h3>
+                <div className="drawer-videos">
+                  {p.videos.map((v) => (
+                    <video
+                      key={v.src}
+                      className={v.portrait ? "is-portrait" : undefined}
+                      src={v.src}
+                      poster={v.poster}
+                      controls
+                      playsInline
+                      preload="none"
+                    />
+                  ))}
+                </div>
+              </>
+            ) : null}
             <a className="btn btn-primary" href="#contact" onClick={close}>
               Nous contacter <BtnArrow />
             </a>

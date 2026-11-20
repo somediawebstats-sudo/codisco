@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Icon } from "../ui/Icon";
 
 /* Hero : volontairement sans bouton (voir docs/BRIEF-DEVELOPPEMENT.md §1).
@@ -13,9 +14,9 @@ export function Hero() {
             <span className="text-green">1 seul interlocuteur.</span>
           </h1>
           <p className="lead">
-            Travaux et maintenance des infrastructures, climatisation et réfrigération, hygiène 3D. CODISCO GIBAT
-            conçoit, réalise et maintient les installations des entreprises, onshore et offshore, de Pointe-Noire à
-            Brazzaville.
+            Travaux et maintenance générale des infrastructures, climatisation et réfrigération, hygiène 3D.
+            <br />
+            CODISCO GIBAT conçoit, réalise et maintient les sites onshore et offshore, de Pointe-Noire à Brazzaville.
           </p>
           <ul className="hero-stats">
             <li>
@@ -30,11 +31,15 @@ export function Hero() {
         </div>
         <div className="hero-visual" aria-hidden="true">
           <div className="hero-halo" />
-          <div className="hero-portrait ph" data-label="Portrait détouré : technicien(ne) CODISCO en EPI" />
+          <div className="hero-portrait" />
+          {/* Portrait détouré (PNG transparent) : le bas est coupé par l'arrondi du cercle, la tête en dépasse */}
+          <div className="hero-person">
+            <Image src="/images/hero/technicien-epi.png" alt="" width={522} height={585} priority sizes="(max-width: 900px) 340px, 460px" />
+          </div>
           {/* Les étiquettes changeront avec les objets de l'animation glitch */}
           <div className="float-badge badge-top">
             <span className="badge-icon"><Icon name="badge" /></span>
-            <span><small>Agrément officiel</small><strong>Santé et Environnement</strong></span>
+            <span><small>Agrément officiel</small><strong>Environnement</strong></span>
           </div>
           <div className="float-badge badge-bottom">
             <span className="badge-icon is-green"><Icon name="headset" /></span>

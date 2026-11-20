@@ -177,9 +177,9 @@ Tailles de texte fluides grâce à `clamp()`. Tester en priorité sur Android d'
 
 - [ ] Licence web de la police Plymouth vérifiée
 - [ ] Logo, favicon et image de partage en place
-- [ ] Les blocs gris `.ph` remplacés par les vraies photos (rechercher `data-label` dans `src/components/`)
-- [ ] `src/data/projets.ts` rempli avec les vrais projets
-- [ ] Les réponses FAQ validées et les marqueurs « [à valider] » retirés
+- [x] Les blocs gris `.ph` remplacés par les vraies photos (rechercher `data-label` dans `src/components/`)
+- [x] `src/data/projets.ts` rempli avec les vrais projets
+- [x] Les réponses FAQ validées et les marqueurs « [à valider] » retirés
 - [ ] Le formulaire testé de bout en bout (réception, réponse, spam)
 - [ ] Les liens `tel:` et WhatsApp testés sur téléphone
 - [ ] Mentions légales et confidentialité rédigées

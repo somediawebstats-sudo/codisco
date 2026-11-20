@@ -14,6 +14,8 @@ export type ServiceItem = {
   num: string;
   titre: string;
   sous: string;
+  /** Seconde ligne de sous-titre (ex. prestataire) */
+  mention?: string;
   content: React.ReactNode;
 };
 
@@ -96,6 +98,7 @@ export function ServicesTabs({ items, aside }: { items: ServiceItem[]; aside?: R
                 <span className="tab-text">
                   <strong>{t.titre}</strong>
                   <small>{t.sous}</small>
+                  {t.mention && <small className="tab-mention">{t.mention}</small>}
                 </span>
                 <span className="tab-arrow">
                   <Icon name="arrow" />
