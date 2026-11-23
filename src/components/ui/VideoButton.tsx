@@ -2,7 +2,7 @@
 
 import { useSite } from "../SiteProvider";
 
-/* Bouton qui ouvre la fenêtre vidéo (fichiers dans public/videos/). */
+/* Bouton qui ouvre la fenêtre vidéo (fichier MP4 dans public/videos/ ou lien YouTube « /embed/ »). */
 export function VideoButton({
   src,
   title,

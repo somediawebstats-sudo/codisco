@@ -85,7 +85,7 @@ const SERVICES: ServiceItem[] = [
           <p className="brands">
             Compte professionnel et représentant <strong>Daikin</strong> et <strong>Mitsubishi</strong>.
           </p>
-          <VideoButton className="link-arrow" src="/videos/teinova.mp4" title="Robot TEINOVA">
+          <VideoButton className="link-arrow" src="https://www.youtube-nocookie.com/embed/rEOw4nwfnQc" title="Robot TEINOVA">
             Voir la vidéo du robot TEINOVA <Icon name="arrow" />
           </VideoButton>
         </div>

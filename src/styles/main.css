@@ -507,7 +507,7 @@ body.is-locked { overflow: hidden; }
 /* ---------- Fenêtre vidéo ---------- */
 .video-modal { width: min(960px, 92vw); padding: 0; border: 0; border-radius: var(--r-md); background: #000; overflow: visible; }
 .video-modal::backdrop { background: rgba(10, 23, 38, 0.8); }
-.video-modal video { width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-md); }
+.video-modal video, .video-modal iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--r-md); }
 .video-modal .drawer-close { top: -56px; right: 0; }
 
 /* ---------- Apparition au défilement ---------- */

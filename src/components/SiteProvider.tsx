@@ -58,7 +58,19 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
         <button className="drawer-close" type="button" onClick={closeVideo} aria-label="Fermer la vidéo">
           <Icon name="close" />
         </button>
-        <video ref={videoRef} key={video?.src} src={video?.src} controls playsInline preload="none" />
+        {/* Lien YouTube : lecteur intégré (fermer la fenêtre le retire, donc arrête la lecture). Sinon : fichier MP4. */}
+        {video && /youtube(-nocookie)?\.com\/embed\//.test(video.src) ? (
+          <iframe
+            key={video.src}
+            src={`${video.src}${video.src.includes("?") ? "&" : "?"}autoplay=1&rel=0`}
+            title={video.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        ) : (
+          <video ref={videoRef} key={video?.src} src={video?.src} controls playsInline preload="none" />
+        )}
       </dialog>
     </SiteContext.Provider>
   );
