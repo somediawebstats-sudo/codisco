@@ -26,7 +26,8 @@ section[id], [id^="service-"] { scroll-margin-top: calc(var(--header-h) + 16px);
 svg use { pointer-events: none; }
 :focus-visible { outline: 3px solid var(--c-blue-300); outline-offset: 3px; border-radius: 6px; }
 
-h1, h2, h3 { font-weight: var(--fw-extrabold); letter-spacing: var(--ls-tight); }
+h1, h2 { font-family: var(--font-heading); font-weight: var(--fw-bold); letter-spacing: var(--ls-tight); }
+h3, h4, h5, h6 { font-family: var(--font-subheading); font-weight: 300; letter-spacing: 0; }
 h2 { font-size: var(--fs-h2); line-height: 1.1; }
 .h2-sm { font-size: var(--fs-h2-sm); line-height: 1.12; }
 .display { font-size: var(--fs-display); line-height: 1; letter-spacing: -0.025em; }
@@ -52,7 +53,7 @@ h2 { font-size: var(--fs-h2); line-height: 1.1; }
   display: inline-flex; align-items: center; gap: 6px;
   padding: 4px 12px; border-radius: var(--r-pill);
   background: var(--c-green-100); color: var(--c-green-700);
-  font-size: var(--fs-xs); line-height: 16px; font-weight: var(--fw-bold);
+  font-family: var(--font-accent); font-size: var(--fs-xs); line-height: 16px; font-weight: 800;
   text-transform: uppercase; letter-spacing: var(--ls-caps);
 }
 .eyebrow-dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
@@ -386,7 +387,7 @@ h2 { font-size: var(--fs-h2); line-height: 1.1; }
 .step-body { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 24px; opacity: calc(0.25 + 0.75 * var(--lit)); transform: translateY(calc((1 - var(--lit)) * 12px)); }
 .steps.is-scroll-driven .step-line > span { transition: transform 160ms linear; }
 .steps.is-scroll-driven .step-body, .steps.is-scroll-driven .step-num b::before, .steps.is-scroll-driven .step-num small { transition: opacity 220ms ease-out, transform 220ms ease-out, box-shadow 220ms ease-out; }
-.steps h3 { font-size: var(--fs-h5); line-height: 28px; font-weight: var(--fw-extrabold); letter-spacing: -0.01em; }
+.steps h3 { font-size: var(--fs-h5); line-height: 28px; font-weight: 300; letter-spacing: 0; }
 .steps p { font-size: var(--fs-small); line-height: 23px; color: var(--c-text-muted); }
 .steps em { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; font-style: normal; font-size: 11px; font-weight: var(--fw-extrabold); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--c-green-700); }
 .steps em::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }

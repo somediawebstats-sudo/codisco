@@ -1,6 +1,6 @@
 # CODISCO GIBAT · Brief de développement du one-page (version VA)
 
-> **Référence unique :** le cadre Figma « CODISCO GIBAT · Accueil one-page (desktop 1440) VA ». L'autre maquette du fichier (en Montserrat) n'est **pas** à développer.
+> **Référence de mise en page :** le cadre Figma « CODISCO GIBAT · Accueil one-page (desktop 1440) VA ». La charte graphique CODISCO GIBAT 2026 remplace les choix typographiques antérieurs.
 > **Préparé par :** sOmedia, novembre 2026.
 
 ---
@@ -101,7 +101,7 @@ Accordéon accessible (boutons `aria-expanded`). Une seule réponse est ouverte 
 
 Les tokens sont dans `src/styles/tokens.css` (variables CSS) et `design/tokens.json`.
 
-- **Police :** Plymouth (Regular, Medium, Bold, ExtraBold), chargée par `next/font` depuis `src/app/fonts/`. Il n'existe pas de DemiBold droit dans les fichiers fournis : la graisse 600 s'affiche en Bold. Titres en ExtraBold, avec un interlettrage légèrement négatif.
+- **Typographie (charte 2026) :** Montserrat variable est chargée localement par `next/font` (Regular 400 pour le texte, Bold 700 pour les titres principaux). L'archive Gilroy fournie comprend Light et ExtraBold, intégrées localement avec l'EULA : Light sert aux intertitres, ExtraBold aux étiquettes accentuées. Gilroy SemiBold, demandée dans la charte, n'est pas dans l'archive.
 - **Couleurs :** vert `#3C6E34` (action, contrat), marine `#0F2234` (titres, blocs sombres), bleu `#265483` (accents), fond `#F4F6FA`.
 - **Rayons :** 12, 20, 28, 32 px, et pilule.
 - **Grille :** conteneur de 1216 px, marges de 32 px. Le cadre Figma s'appelle « 1440 » mais mesure 1280 px.
@@ -125,7 +125,7 @@ Tailles de texte fluides grâce à `clamp()`. Tester en priorité sur Android d'
 
 | Élément | Format conseillé | Où |
 |---|---|---|
-| Police Plymouth en web | woff2 déjà générés, **licence web à vérifier** | `src/app/fonts/` |
+| Polices | Montserrat WOFF2 + OFL ; Gilroy Light et ExtraBold OTF + EULA | `src/app/fonts/`, `docs/licences/` |
 | Logo | SVG couleur fourni par le client | `public/images/logo-codisco-gibat.svg` |
 | Favicon | Symbole CG PNG recadré, 512 × 512 | `src/app/icon.png` |
 | Image de partage | JPG 1200 × 630 | `public/images/og-image.jpg` |
@@ -175,7 +175,8 @@ Tailles de texte fluides grâce à `clamp()`. Tester en priorité sur Android d'
 
 ## 13. Check-list de mise en ligne
 
-- [ ] Licence web de la police Plymouth vérifiée
+- [x] Montserrat intégrée localement avec sa licence SIL OFL
+- [ ] Fichier Gilroy SemiBold fourni si l'intertitre doit correspondre exactement à la charte
 - [ ] Logo, favicon et image de partage en place
 - [x] Les blocs gris `.ph` remplacés par les vraies photos (rechercher `data-label` dans `src/components/`)
 - [x] `src/data/projets.ts` rempli avec les vrais projets

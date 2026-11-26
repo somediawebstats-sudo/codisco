@@ -1,8 +1,10 @@
 /* =========================================================
    CODISCO GIBAT · Design tokens (source : maquette Figma VA)
    Toutes les valeurs sont relevées directement dans la VA.
-   La police Plymouth est chargée par next/font (src/app/layout.tsx),
-   via la variable --font-plymouth. Équivalent JSON : design/tokens.json
+   Montserrat est chargée localement par next/font (src/app/layout.tsx).
+   Gilroy Light et ExtraBold sont chargées localement depuis l'archive fournie.
+   La graisse SemiBold ne figure pas dans cette archive.
+   Équivalent JSON : design/tokens.json
    ========================================================= */
 
 :root {
@@ -48,7 +50,10 @@
   --c-border:      var(--c-slate-200);
 
   /* ---------- Typographie ---------- */
-  --font-sans: var(--font-plymouth), "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-sans: var(--font-montserrat), "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: var(--font-montserrat), "Montserrat", system-ui, sans-serif;
+  --font-subheading: var(--font-gilroy-light), var(--font-montserrat), "Montserrat", system-ui, sans-serif;
+  --font-accent: var(--font-gilroy-extrabold), var(--font-montserrat), "Montserrat", system-ui, sans-serif;
 
   /* Échelle desktop (valeurs Figma) ; les clamp() gèrent le mobile */
   --fs-display: clamp(2.25rem, 1.2rem + 3.6vw, 3.375rem);  /* 54 / 54, ls -1.35px */
