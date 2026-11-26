@@ -127,7 +127,7 @@ Tailles de texte fluides grâce à `clamp()`. Tester en priorité sur Android d'
 |---|---|---|
 | Police Plymouth en web | woff2 déjà générés, **licence web à vérifier** | `src/app/fonts/` |
 | Logo | SVG couleur fourni par le client | `public/images/logo-codisco-gibat.svg` |
-| Favicon | PNG 512 × 512 | `src/app/icon.png` |
+| Favicon | Symbole CG SVG recadré, 512 × 512 | `src/app/icon.svg` |
 | Image de partage | JPG 1200 × 630 | `public/images/og-image.jpg` |
 | Portrait détouré du hero et 6 objets glitch | PNG ou WebP transparents, 1200 px de haut | `public/images/hero/` |
 | Photos des 3 services | WebP, 1600 px de large | `public/images/services/` |
