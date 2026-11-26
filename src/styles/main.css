@@ -440,6 +440,8 @@ h2 { font-size: var(--fs-h2); line-height: 1.1; }
 .field-full { grid-column: 1 / -1; }
 .field > span { font-size: 11px; font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--c-slate-700); }
 .field input, .field select, .field textarea { width: 100%; padding: 12px 16px; border-radius: var(--r-sm); border: 1px solid var(--c-border); background: var(--c-slate-50); font-size: var(--fs-small); transition: border-color var(--dur), box-shadow var(--dur); }
+.phone-field { display: grid; grid-template-columns: minmax(118px, 0.9fr) minmax(0, 1.4fr); gap: 8px; }
+.phone-field select, .phone-field input { min-width: 0; padding-inline: 10px; }
 .field textarea { resize: vertical; min-height: 120px; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--c-green-700); box-shadow: 0 0 0 3px rgba(60, 110, 52, 0.15); }
 .field [aria-invalid="true"] { border-color: #DC2626; }

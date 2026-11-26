@@ -62,7 +62,7 @@ export function Contract() {
             </div>
             <div className="contract-visual">
               <div className="ph">
-                <Image src="/images/contrat/technicien-rapport.webp" alt="Technicien CODISCO GIBAT remplissant une fiche de contrôle avant intervention" fill sizes="(max-width: 900px) 100vw, 520px" style={{ objectPosition: "center 20%" }} />
+                <Image src="/images/contrat/technicien-codisco-gibat-rapport-maintenance.webp" alt="Technicien CODISCO GIBAT remplissant une fiche de contrôle avant intervention" fill sizes="(max-width: 900px) 100vw, 520px" style={{ objectPosition: "center 20%" }} />
               </div>
               <div className="contract-tag">
                 <span>Astreinte 24 h/24, 7 j/7</span>

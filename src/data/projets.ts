@@ -3,7 +3,7 @@
    Ajouter un projet = ajouter un objet ici, sans toucher aux composants.
    - slug : identifiant unique, sert d'ancre partageable (#projet-slug)
      et de nom de dossier pour les médias :
-       public/images/projets/<slug>/01.webp, 02.webp…
+       public/images/projets/<slug>/<slug>-01.webp, <slug>-02.webp…
        public/videos/projets/<slug>/01.mp4 (+ 01.webp pour la vignette)
    - service : range le projet dans sa ligne de métier (voir LIGNES) ;
      une ligne sans projet n'est pas affichée
@@ -46,9 +46,12 @@ export const LIGNES: { key: string; label: string; services: ServiceKey[] }[] = 
   { key: "autres", label: "Travaux, maintenance et contrats globaux", services: ["travaux", "contrat"] },
 ];
 
-/* Chemins des photos d'un projet : public/images/projets/<slug>/01.webp … */
+/* Chemins des photos d'un projet : public/images/projets/<slug>/<slug>-01.webp … */
 const photos = (slug: string, n: number) =>
-  Array.from({ length: n }, (_, i) => `/images/projets/${slug}/${String(i + 1).padStart(2, "0")}.webp`);
+  Array.from(
+    { length: n },
+    (_, i) => `/images/projets/${slug}/${slug}-${String(i + 1).padStart(2, "0")}.webp`,
+  );
 
 export const PROJETS: Projet[] = [
   {

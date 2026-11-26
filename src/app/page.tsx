@@ -23,7 +23,7 @@ const jsonLd = {
   name: SITE.nom,
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/images/logo-codisco-gibat.svg`,
-  image: `${SITE_URL}${SITE.partage.image}`,
+  image: `${SITE_URL}/opengraph-image`,
   description: "Travaux et maintenance des infrastructures, climatisation et réfrigération, hygiène 3D.",
   telephone: CONTACT.telephones.map((t) => t.lien),
   address: {
@@ -34,6 +34,7 @@ const jsonLd = {
   },
   areaServed: ["Pointe-Noire", "Brazzaville", "République du Congo"],
   openingHours: "Mo-Su 00:00-23:59",
+  sameAs: [CONTACT.reseaux.linkedin, CONTACT.reseaux.facebook],
 };
 
 export default function Home() {

@@ -8,10 +8,10 @@ export function About() {
       <div className="container about-grid">
         <div className="about-visual">
           <div className="ph about-img-back">
-            <Image src="/images/a-propos/equipe.webp" alt="Équipe CODISCO GIBAT en intervention dans une salle des machines" fill sizes="(max-width: 900px) 45vw, 260px" />
+            <Image src="/images/a-propos/equipe-techniciens-codisco-gibat.webp" alt="Équipe CODISCO GIBAT en intervention dans une salle des machines" fill sizes="(max-width: 900px) 45vw, 260px" />
           </div>
           <div className="ph about-img-front">
-            <Image src="/images/a-propos/site.webp" alt="Levage d'une unité de climatisation à la grue sur un site TotalEnergies" fill sizes="(max-width: 900px) 70vw, 420px" />
+            <Image src="/images/a-propos/levage-climatisation-site-totalenergies.webp" alt="Levage d'une unité de climatisation à la grue sur un site TotalEnergies" fill sizes="(max-width: 900px) 70vw, 420px" />
           </div>
           <div className="about-badge">
             <strong><CountUp to={30} prefix="+" /></strong>

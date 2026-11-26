@@ -26,15 +26,54 @@ const gilroyExtraBold = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: SITE.titre,
+  title: {
+    default: SITE.titre,
+    template: `%s | ${SITE.nom}`,
+  },
   description: SITE.description,
   alternates: { canonical: "/" },
+  applicationName: SITE.nom,
+  category: "Travaux, climatisation et hygiène 3D",
+  keywords: [
+    "CODISCO GIBAT",
+    "climatisation Pointe-Noire",
+    "réfrigération Congo",
+    "travaux et maintenance Congo",
+    "hygiène 3D Congo",
+    "climatisation industrielle",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     type: "website",
     locale: "fr_FR",
+    siteName: SITE.nom,
+    url: "/",
     title: SITE.partage.titre,
     description: SITE.partage.description,
-    images: [SITE.partage.image],
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "CODISCO GIBAT, travaux, climatisation et hygiène 3D au Congo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE.partage.titre,
+    description: SITE.partage.description,
+    images: ["/opengraph-image"],
   },
 };
 

@@ -7,14 +7,13 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.codisco
 
 export const SITE = {
   nom: "CODISCO GIBAT",
-  titre: "CODISCO GIBAT · Travaux, climatisation et hygiène 3D au Congo",
+  titre: "CODISCO GIBAT | Climatisation, travaux et hygiène 3D au Congo",
   description:
-    "CODISCO GIBAT : travaux et maintenance des infrastructures, climatisation et réfrigération, hygiène 3D. Un seul interlocuteur, onshore et offshore, de Pointe-Noire à Brazzaville, depuis plus de 30 ans.",
+    "Depuis plus de 30 ans, CODISCO GIBAT réalise au Congo des travaux et maintenances, l'installation de climatisation et de réfrigération, ainsi que des prestations d'hygiène 3D. À Pointe-Noire, Brazzaville et sur les sites onshore et offshore.",
   partage: {
-    titre: "CODISCO GIBAT · 3 services, 1 seul interlocuteur",
+    titre: "CODISCO GIBAT | Votre partenaire technique au Congo",
     description:
-      "Travaux et maintenance, climatisation et réfrigération, hygiène 3D. De Pointe-Noire à Brazzaville, onshore et offshore.",
-    image: "/images/og-image.jpg", // 1200 × 630, à ajouter dans public/images/
+      "Travaux et maintenance, climatisation et réfrigération, hygiène 3D : CODISCO GIBAT accompagne les professionnels de Pointe-Noire à Brazzaville.",
   },
 };
 

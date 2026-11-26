@@ -34,7 +34,7 @@ export function Hero() {
           <div className="hero-portrait" />
           {/* Portrait détouré (PNG transparent) : le bas est coupé par l'arrondi du cercle, la tête en dépasse */}
           <div className="hero-person">
-            <Image src="/images/hero/technicien-codisco.png" alt="" width={1134} height={1387} priority sizes="(max-width: 900px) 340px, 460px" />
+            <Image src="/images/hero/technicien-codisco-gibat-climatisation.png" alt="" width={1134} height={1387} priority sizes="(max-width: 900px) 340px, 460px" />
           </div>
           {/* Les étiquettes changeront avec les objets de l'animation glitch */}
           <div className="float-badge badge-top">
