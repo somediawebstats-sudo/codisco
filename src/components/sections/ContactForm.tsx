@@ -11,27 +11,10 @@ import { BtnArrow } from "../ui/Icon";
 
 type Statut = { message: string; ok: boolean } | null;
 
-const INDICATIFS = [
-  { pays: "Congo (République du)", code: "+242" },
-  { pays: "République démocratique du Congo", code: "+243" },
-  { pays: "Angola", code: "+244" },
-  { pays: "Cameroun", code: "+237" },
-  { pays: "Gabon", code: "+241" },
-  { pays: "France", code: "+33" },
-  { pays: "Sénégal", code: "+221" },
-  { pays: "Côte d’Ivoire", code: "+225" },
-  { pays: "Maroc", code: "+212" },
-  { pays: "Afrique du Sud", code: "+27" },
-  { pays: "Royaume-Uni", code: "+44" },
-  { pays: "États-Unis / Canada", code: "+1" },
-  { pays: "Émirats arabes unis", code: "+971" },
-];
-
 export function ContactForm() {
   const { objet, setObjet } = useSite();
   const [statut, setStatut] = useState<Statut>(null);
   const [envoi, setEnvoi] = useState(false);
-  const [indicatif, setIndicatif] = useState("+242");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -52,14 +35,9 @@ export function ContactForm() {
     setStatut({ message: "Envoi en cours...", ok: true });
     try {
       const donnees = new FormData(form);
-      const numeroLocal = String(donnees.get("telephone-local") ?? "").trim();
-      donnees.set("telephone", `${indicatif} ${numeroLocal}`);
-      donnees.delete("telephone-local");
-      donnees.delete("indicatif");
       const res = await fetch("/api/contact", { method: "POST", body: donnees });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       form.reset();
-      setIndicatif("+242");
       setObjet("");
       setStatut({ message: "Merci, votre demande est bien envoyée. Nous vous répondons sous 24 h.", ok: true });
     } catch {
@@ -86,34 +64,6 @@ export function ContactForm() {
         <label className="field">
           <span>Email *</span>
           <input name="email" type="email" autoComplete="email" placeholder="nom@entreprise.com" required />
-        </label>
-        <label className="field">
-          <span>Téléphone *</span>
-          <div className="phone-field">
-            <select
-              name="indicatif"
-              aria-label="Indicatif téléphonique"
-              autoComplete="tel-country-code"
-              value={indicatif}
-              onChange={(e) => setIndicatif(e.target.value)}
-              required
-            >
-              {INDICATIFS.map(({ pays, code }) => (
-                <option key={code} value={code}>
-                  {code} · {pays}
-                </option>
-              ))}
-            </select>
-            <input
-              name="telephone-local"
-              type="tel"
-              autoComplete="tel-national"
-              inputMode="tel"
-              placeholder="06 000 00 00"
-              aria-label="Numéro de téléphone sans indicatif"
-              required
-            />
-          </div>
         </label>
         <label className="field">
           <span>Objet de votre demande *</span>

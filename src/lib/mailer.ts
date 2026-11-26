@@ -27,8 +27,7 @@ export async function envoyerDemande(d: ContactData) {
       "Nouvelle demande depuis le site CODISCO GIBAT\n\n" +
       `Objet : ${d.objet}\n` +
       `Nom et société : ${d.nom}\n` +
-      `Email : ${d.email}\n` +
-      `Téléphone : ${d.telephone}\n\n` +
+      `Email : ${d.email}\n\n` +
       `Message :\n${d.message}\n`,
   });
 }
