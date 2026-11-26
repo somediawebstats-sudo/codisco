@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <Image src="/images/logo-codisco-gibat.png" alt="CODISCO GIBAT" width={80} height={80} />
+          <Image src="/images/logo-codisco-gibat.svg" alt="CODISCO GIBAT" width={3000} height={792} />
           <p>
             3 services, 1 seul interlocuteur. Travaux et maintenance, climatisation et réfrigération, hygiène 3D,
             depuis plus de 30 ans.

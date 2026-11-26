@@ -22,7 +22,7 @@ const jsonLd = {
   "@type": "LocalBusiness",
   name: SITE.nom,
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/images/logo-codisco-gibat.png`,
+  logo: `${SITE_URL}/images/logo-codisco-gibat.svg`,
   image: `${SITE_URL}${SITE.partage.image}`,
   description: "Travaux et maintenance des infrastructures, climatisation et réfrigération, hygiène 3D.",
   telephone: CONTACT.telephones.map((t) => t.lien),

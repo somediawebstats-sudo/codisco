@@ -41,7 +41,7 @@ export function Header() {
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
       <div className="container header-inner">
         <a className="brand" href="#accueil" aria-label="CODISCO GIBAT, retour à l'accueil">
-          <Image src="/images/logo-codisco-gibat.png" alt="CODISCO GIBAT" width={72} height={72} priority />
+          <Image src="/images/logo-codisco-gibat.svg" alt="CODISCO GIBAT" width={3000} height={792} priority />
         </a>
         <nav className={`main-nav${menuOpen ? " is-open" : ""}`} id="menu" aria-label="Navigation principale">
           <ul>
